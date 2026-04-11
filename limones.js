@@ -117,7 +117,8 @@ function detectarPiso()
         document.getElementById("txtVidas").textContent = vidas
 
         if (vidas === 0)
-        {
+        { 
+            clearInterval(intervalo);
             alert("GAME OVER");
         }
     }
@@ -143,4 +144,17 @@ function reiniciarVelocidad()
 {
     clearInterval(intervalo);
     intervalo = setInterval(bajarLimon, velocidadCaida);
+}
+
+function reiniciar()
+{
+    vidas = 3;
+    puntaje = 0;
+
+    document.getElementById("txtVidas").textContent = vidas;
+    document.getElementById("txtPuntaje").textContent = puntaje;
+
+    clearInterval(intervalo);
+
+    iniciar();
 }
