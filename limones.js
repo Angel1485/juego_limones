@@ -11,13 +11,17 @@ let personajeX = canvas.width/2;
 let personajeY = canvas.height-(ALTURA_SUELO+ALTURA_PERSONAJE);
 let limonX = canvas.width/2;
 let limonY = 10;
+let puntaje = 0;
+let vidas = 3;
+let velocidadCaida = 200;
+let intervalo; // para reiniciar
 
 
 function iniciar()
 {
+    intervalo = setInterval(bajarLimon,velocidadCaida);
     dibujarSuelo();
     dibujarPersonaje();
-    //dibujarLimon();
     aparecerLimon();
 }
 
@@ -37,14 +41,14 @@ function moverIzquierda()
 {
     personajeX =  personajeX - 10;
     actualizarPantalla();
-    detectarColision();
+    detectarAtrapado();
 }
 
 function moverDerecha()
 {
     personajeX = personajeX + 10;
     actualizarPantalla();
-    detectarColision();
+    detectarAtrapado();
 }
 
 function actualizarPantalla()
@@ -69,17 +73,53 @@ function bajarLimon()
 {
     limonY = limonY + 10;
     actualizarPantalla();
+    detectarAtrapado();
+    detectarPiso();
 }
 
-function detectarColision()
+function detectarAtrapado()
 {
     if(limonX + ANCHO_LIMON > personajeX && 
        limonX <  personajeX + ANCHO_PERSONAJE &&
        limonY + ALTURA_LIMON > personajeY && 
        limonY < personajeY + ALTURA_PERSONAJE)
     {
-        //alert("Atrapado");
+        puntaje = puntaje + 1;
+        document.getElementById("txtPuntaje").textContent = puntaje;;
+
+         // Aumentar velocidad según puntaje
+        if (puntaje === 3)
+        {
+            velocidadCaida = 150;
+            reiniciarVelocidad();
+        }
+        else if (puntaje === 6)
+        {
+            velocidadCaida = 100;
+            reiniciarVelocidad();
+        }
+        else if (puntaje === 10)
+        {
+            clearInterval(intervalo);
+            alert("ERES EL GANADOR: Felicidades has agando un auto 0KM");
+        }
+
         aparecerLimon();
+    }
+}
+
+function detectarPiso()
+{
+    if(limonY + ALTURA_LIMON === canvas.height - ALTURA_SUELO)
+    {
+        aparecerLimon();
+        vidas = vidas - 1;
+        document.getElementById("txtVidas").textContent = vidas
+
+        if (vidas === 0)
+        {
+            alert("GAME OVER");
+        }
     }
 }
 
@@ -92,15 +132,15 @@ function generarAleatorio(min, max)
     return numeroEntero;
 }
 
-function probarAleatorio()
-{ 
-    let aleatorio = generarAleatorio(10,80);
-    console.log(aleatorio); 
-}
-
 function aparecerLimon()
 {
     limonX = generarAleatorio(0,canvas.width-ANCHO_LIMON)
     limonY = 0;
     actualizarPantalla();
+}
+
+function reiniciarVelocidad()
+{
+    clearInterval(intervalo);
+    intervalo = setInterval(bajarLimon, velocidadCaida);
 }
