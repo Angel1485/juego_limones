@@ -7,13 +7,19 @@
 
 <body onload="iniciar();">
   <div class="contenedor">
-    <h1>Atrapar Limones</h1>
+    <h1>🍋 Atrapa Limones</h1>
+    <img src="image/personaje.png" class="imagen-superior" width="10" height="200">
     <p>Si del cielo te caen limones ..... </p>
     <h2>Autor: Angel Sarango</h2>
     <canvas id="areaJuego" width="500" height="500"></canvas>
+    <div id="gameOver" class="overlay">
+      <h1>💔 Game Over</h1>
+      <p>Puntaje final: <span id="finalScore">0</span></p>
+    </div>
+
     <div class="panel">
       <p>Puntaje: <span id="txtPuntaje">0</span></p>
-      <p>Vidas: <span id="txtVidas">3</span></p>
+      <p>Vidas: ❤️ <span id="txtVidas">3</span></p>
     </div>
     <div class="botones">
       <button onclick="moverIzquierda()">Izquierda</button>

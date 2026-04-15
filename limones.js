@@ -16,7 +16,6 @@ let vidas = 3;
 let velocidadCaida = 200;
 let intervalo; // para reiniciar
 
-
 function iniciar()
 {
     intervalo = setInterval(bajarLimon,velocidadCaida);
@@ -33,8 +32,25 @@ function dibujarSuelo()
 
 function dibujarPersonaje()
 {
-    ctx.fillStyle = "yellow";
-    ctx.fillRect (personajeX,personajeY,ANCHO_PERSONAJE,ALTURA_PERSONAJE);
+    // cuerpo
+    ctx.fillStyle = "#38bdf8";
+    ctx.fillRect(personajeX, personajeY, ANCHO_PERSONAJE, ALTURA_PERSONAJE);
+
+    // ojos
+    ctx.fillStyle = "white";
+    ctx.fillRect(personajeX + 8, personajeY + 10, 8, 8);
+    ctx.fillRect(personajeX + 24, personajeY + 10, 8, 8);
+
+    // pupilas
+    ctx.fillStyle = "black";
+    ctx.fillRect(personajeX + 10, personajeY + 12, 4, 4);
+    ctx.fillRect(personajeX + 26, personajeY + 12, 4, 4);
+
+    // boca
+    ctx.fillRect(personajeX + 12, personajeY + 30, 16, 4);
+
+    // ctx.fillStyle = "yellow";
+    // ctx.fillRect (personajeX,personajeY,ANCHO_PERSONAJE,ALTURA_PERSONAJE);
 }
 
 function moverIzquierda()
@@ -65,8 +81,29 @@ function limpiarCanva()
 
 function dibujarLimon()
 {
+    ctx.beginPath();
+    ctx.ellipse(
+        limonX + ANCHO_LIMON/2,
+        limonY + ALTURA_LIMON/2,
+        ANCHO_LIMON/2,
+        ALTURA_LIMON/3,
+        0, 0, Math.PI * 2
+    );
+    ctx.fillStyle = "yellow";
+    ctx.fill();
+
+    // hoja
+    ctx.beginPath();
+    ctx.ellipse(
+        limonX + ANCHO_LIMON/2,
+        limonY - 2,
+        5, 3, 0, 0, Math.PI * 2
+    );
     ctx.fillStyle = "green";
-    ctx.fillRect (limonX,limonY,ANCHO_LIMON,ALTURA_LIMON);
+    ctx.fill();
+
+    // ctx.fillStyle = "green";
+    // ctx.fillRect (limonX,limonY,ANCHO_LIMON,ALTURA_LIMON);
 }
 
 function bajarLimon()
@@ -119,7 +156,9 @@ function detectarPiso()
         if (vidas === 0)
         { 
             clearInterval(intervalo);
-            alert("GAME OVER");
+            //alert("GAME OVER");
+            mostrarGameOver();
+
         }
     }
 }
@@ -157,4 +196,21 @@ function reiniciar()
     clearInterval(intervalo);
 
     iniciar();
+}
+
+function mostrarGameOver() {
+    let overlay = document.getElementById("gameOver");
+
+    // Mostrar overlay
+    overlay.style.display = "flex";
+
+    // Mostrar puntaje final
+    document.getElementById("finalScore").innerText =
+        document.getElementById("txtPuntaje").innerText;
+
+    // Reiniciar automáticamente en 3 segundos
+    setTimeout(() => {
+        reiniciar();
+        overlay.style.display = "none";
+    }, 3000);
 }
