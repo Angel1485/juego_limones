@@ -146,3 +146,21 @@ canvas {
   margin: 0 auto 10px auto;
   border-radius: 10px;
 }
+
+/* BOTON */
+.btn-volver {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366f1, #38bdf8);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+/* HOVER */
+.btn-volver:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
